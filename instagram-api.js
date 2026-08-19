@@ -172,7 +172,7 @@ function mapIgPost(igPost, index) {
 async function fetchAccountStats() {
   try {
     // 1. Account-level fields
-    const accountUrl = new URL(window.location.href.split('/').slice(0, -1).join('/') + '/instagram.php');
+    const accountUrl = new URL('instagram.php', window.location.href);
     accountUrl.searchParams.set('action', 'stats');
 
     const accountRes = await fetch(accountUrl.toString());
@@ -182,7 +182,7 @@ async function fetchAccountStats() {
     if (account.error) throw new Error(account.error);
 
     // 2. Fetch recent posts for engagement calculation
-    const mediaUrl = new URL(window.location.href.split('/').slice(0, -1).join('/') + '/instagram.php');
+    const mediaUrl = new URL('instagram.php', window.location.href);
     mediaUrl.searchParams.set('action', 'recent_media');
     mediaUrl.searchParams.set('limit', '30'); // last 30 posts
 
@@ -219,7 +219,7 @@ async function fetchAccountStats() {
 
 // ── FETCH FROM API ───────────────────────────────────────────
 async function fetchInstagramPosts() {
-  const url = new URL(window.location.href.split('/').slice(0, -1).join('/') + '/instagram.php');
+  const url = new URL('instagram.php', window.location.href);
   url.searchParams.set('action', 'posts');
   url.searchParams.set('limit',  INSTAGRAM_CONFIG.POSTS_PER_PAGE * 2);
 
