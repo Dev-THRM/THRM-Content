@@ -812,14 +812,16 @@ button { cursor: pointer; font-family: inherit; background: none; border: none; 
 
 .modal-body {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.1fr 1fr;
+  height: clamp(380px, 85vh, 680px);
 }
 
 .modal-visual {
-  min-height: 460px;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  background: #040812;
 }
 
 .modal-info {
@@ -829,7 +831,6 @@ button { cursor: pointer; font-family: inherit; background: none; border: none; 
   gap: 20px;
   border-left: 1px solid var(--line);
   overflow-y: auto;
-  max-height: 460px;
 }
 
 .modal-meta {

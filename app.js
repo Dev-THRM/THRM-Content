@@ -135,30 +135,30 @@ function openModal(post) {
       vid.autoplay = true;
       vid.controls = true;
       vid.loop = true;
-      vid.style.cssText = 'width:100%;height:100%;object-fit:contain;min-height:460px;display:block;background:#000;';
+      vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
       visual.appendChild(vid);
     } else {
       // Real Instagram image 
       const img = document.createElement('img');
       img.src = post.mediaUrl;
       img.alt = post.caption ? post.caption.slice(0, 60) : 'Instagram post';
-      img.style.cssText = 'width:100%;height:100%;object-fit:cover;min-height:460px;display:block;';
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
       img.onerror = () => {
         img.remove();
-        const tile = buildTile(post, '460px');
+        const tile = buildTile(post, null);
         tile.style.position = 'relative';
         tile.style.inset    = 'auto';
-        tile.style.minHeight = '460px';
+        tile.style.height   = '100%';
         visual.appendChild(tile);
       };
       visual.appendChild(img);
     }
   } else {
     // Colour tile
-    const tile = buildTile(post, '460px');
+    const tile = buildTile(post, null);
     tile.style.position = 'relative';
     tile.style.inset    = 'auto';
-    tile.style.minHeight = '460px';
+    tile.style.height   = '100%';
     visual.appendChild(tile);
   }
 
