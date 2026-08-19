@@ -179,7 +179,10 @@ async function fetchAccountStats() {
     if (!accountRes.ok) throw new Error(`Account fetch failed: ${accountRes.status}`);
     const account = await accountRes.json();
     
-    if (account.error) throw new Error(account.error);
+    if (account.error) {
+      const errMsg = typeof account.error === 'object' ? JSON.stringify(account.error) : account.error;
+      throw new Error(errMsg);
+    }
 
     // 2. Fetch recent posts for engagement calculation
     const mediaUrl = new URL('instagram.php', window.location.href);
@@ -233,6 +236,11 @@ async function fetchInstagramPosts() {
     }
 
     const json  = await res.json();
+    
+    if (json.error) {
+      const errMsg = typeof json.error === 'object' ? JSON.stringify(json.error) : json.error;
+      throw new Error(errMsg);
+    }
     const items = (json.data || []).filter(p =>
       p.media_type === 'IMAGE' || p.media_type === 'VIDEO' || p.media_type === 'CAROUSEL_ALBUM'
     );
