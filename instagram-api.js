@@ -162,6 +162,7 @@ function mapIgPost(igPost, index) {
     mediaUrl:   igPost.media_type === 'VIDEO'
                   ? (igPost.thumbnail_url || igPost.media_url || null)
                   : (igPost.media_url || igPost.thumbnail_url || null),
+    videoUrl:   igPost.media_type === 'VIDEO' ? igPost.media_url : null,
     isReal:     true,
   };
 }

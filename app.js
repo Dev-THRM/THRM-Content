@@ -128,20 +128,31 @@ function openModal(post) {
   visual.innerHTML = '';
 
   if (post.isReal && post.mediaUrl) {
-    // Real Instagram image 
-    const img = document.createElement('img');
-    img.src = post.mediaUrl;
-    img.alt = post.caption ? post.caption.slice(0, 60) : 'Instagram post';
-    img.style.cssText = 'width:100%;height:100%;object-fit:cover;min-height:460px;display:block;';
-    img.onerror = () => {
-      img.remove();
-      const tile = buildTile(post, '460px');
-      tile.style.position = 'relative';
-      tile.style.inset    = 'auto';
-      tile.style.minHeight = '460px';
-      visual.appendChild(tile);
-    };
-    visual.appendChild(img);
+    if (post.type === 'reel' && post.videoUrl) {
+      // Real Instagram video (Reel)
+      const vid = document.createElement('video');
+      vid.src = post.videoUrl;
+      vid.autoplay = true;
+      vid.controls = true;
+      vid.loop = true;
+      vid.style.cssText = 'width:100%;height:100%;object-fit:contain;min-height:460px;display:block;background:#000;';
+      visual.appendChild(vid);
+    } else {
+      // Real Instagram image 
+      const img = document.createElement('img');
+      img.src = post.mediaUrl;
+      img.alt = post.caption ? post.caption.slice(0, 60) : 'Instagram post';
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;min-height:460px;display:block;';
+      img.onerror = () => {
+        img.remove();
+        const tile = buildTile(post, '460px');
+        tile.style.position = 'relative';
+        tile.style.inset    = 'auto';
+        tile.style.minHeight = '460px';
+        visual.appendChild(tile);
+      };
+      visual.appendChild(img);
+    }
   } else {
     // Colour tile
     const tile = buildTile(post, '460px');
