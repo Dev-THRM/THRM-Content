@@ -1,6 +1,6 @@
 let POSTS          = [];  
 let currentFilter  = 'all';
-let displayedCount = 6;
+let displayedCount = 12;
 const likedPosts   = new Set();
 const savedPosts   = new Set();
 
@@ -235,7 +235,7 @@ document.getElementById('feed-tabs').addEventListener('click', e => {
 
 
 document.getElementById('load-more-btn').addEventListener('click', () => {
-  displayedCount += 3;
+  displayedCount += 4;
   renderFeed();
 });
 

@@ -2,10 +2,6 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
-// ===================================================
-// SECURE CONFIGURATION
-// Your token is safe here because PHP code is never sent to the browser.
-// ===================================================
 $ACCESS_TOKEN = 'IGAAfKKGzijcBBZAFpFMl8zaWRKQ19pSW9WZAFU5enRuMkJmSi14Q3NHRV80cG4zdWVIeVdWNTZAwNVdDaURzeEhBV0JpRkYtbGxTaXJpN2FSWkR0MnRiWWJ3ZAkExZAUNlOUx6NHQ0emgwa0pycnJjUkt6YjI1cHRlWElQMTlONlpwQQZDZD';
 
 if (!$ACCESS_TOKEN) {
