@@ -224,7 +224,7 @@ async function fetchAccountStats() {
 async function fetchInstagramPosts(after = null) {
   const url = new URL('instagram.php', window.location.href);
   url.searchParams.set('action', 'posts');
-  url.searchParams.set('limit',  INSTAGRAM_CONFIG.POSTS_PER_PAGE * 2);
+  url.searchParams.set('limit', 100); // Fetch max allowed to ensure we have enough Reels & Posts instantly
   if (after) {
     url.searchParams.set('after', after);
   }

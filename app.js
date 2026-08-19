@@ -289,11 +289,21 @@ function animateCount(el, target, duration) {
   requestAnimationFrame(step);
 }
 
+let isHeroVisible  = false;
+let apiStatsLoaded = false;
+
+function checkAndAnimateStats() {
+  if (isHeroVisible && apiStatsLoaded) {
+    document.querySelectorAll('.stat-number').forEach(el => {
+      animateCount(el, parseFloat(el.dataset.target), 1600);
+    });
+  }
+}
+
 const heroObserver = new IntersectionObserver(entries => {
   if (entries[0].isIntersecting) {
-    document.querySelectorAll('.stat-number').forEach(el => {
-      animateCount(el, parseInt(el.dataset.target, 10), 1600);
-    });
+    isHeroVisible = true;
+    checkAndAnimateStats();
     heroObserver.disconnect();
   }
 }, { threshold: 0.5 });
@@ -332,7 +342,11 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 // });
 
 function applyAccountStats(stats) {
-  if (!stats) return;
+  if (!stats) {
+    apiStatsLoaded = true;
+    checkAndAnimateStats();
+    return;
+  }
 
   // Format numbers: e.g. 24700 → "24.7K", 1123 → "1123"
   function fmtStat(n) {
@@ -353,7 +367,6 @@ function applyAccountStats(stats) {
     if (match && numEl && unitEl) {
       numEl.dataset.target = match[1];
       unitEl.textContent   = match[2];
-      animateCount(numEl, parseFloat(match[1]), 1600);
     }
   }
 
@@ -366,7 +379,6 @@ function applyAccountStats(stats) {
     if (match && numEl && unitEl) {
       numEl.dataset.target = match[1];
       unitEl.textContent   = match[2] + '+';
-      animateCount(numEl, parseFloat(match[1]), 1600);
     }
   }
 
@@ -378,9 +390,11 @@ function applyAccountStats(stats) {
     if (numEl && unitEl) {
       numEl.dataset.target = rate;
       unitEl.textContent   = '%';
-      animateCount(numEl, parseFloat(rate), 1600);
     }
   }
+
+  apiStatsLoaded = true;
+  checkAndAnimateStats();
 }
 
 async function init() {
