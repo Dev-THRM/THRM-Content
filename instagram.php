@@ -19,8 +19,12 @@ if ($action === 'stats') {
 } elseif ($action === 'posts') {
     // Fetch feed posts
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 18;
+    $after = isset($_GET['after']) ? $_GET['after'] : '';
     $fields = "id,caption,media_type,media_url,thumbnail_url,permalink,timestamp,like_count,comments_count";
     $url = "https://graph.instagram.com/me/media?fields=" . $fields . "&limit=" . $limit . "&access_token=" . $ACCESS_TOKEN;
+    if ($after) {
+        $url .= "&after=" . urlencode($after);
+    }
 } elseif ($action === 'recent_media') {
     // Fetch recent media just for engagement calculation
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 30;

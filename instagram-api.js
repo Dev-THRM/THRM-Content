@@ -220,14 +220,16 @@ async function fetchAccountStats() {
 }
 
 // ── FETCH FROM API ───────────────────────────────────────────
-async function fetchInstagramPosts() {
+async function fetchInstagramPosts(after = null) {
   const url = new URL('instagram.php', window.location.href);
   url.searchParams.set('action', 'posts');
   url.searchParams.set('limit',  INSTAGRAM_CONFIG.POSTS_PER_PAGE * 2);
+  if (after) {
+    url.searchParams.set('after', after);
+  }
 
   try {
     const res = await fetch(url.toString());
-
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
@@ -246,10 +248,17 @@ async function fetchInstagramPosts() {
 
     const posts = items.map(mapIgPost);
     console.info(`[THRM] Loaded ${posts.length} real posts from Instagram.`);
-    return { posts, source: 'instagram' };
+
+    return {
+      posts: posts,
+      nextCursor: json.paging?.cursors?.after || null
+    };
 
   } catch (err) {
     console.warn('[THRM] Instagram API error — falling back to dummy posts.', err.message);
-    return { posts: DUMMY_POSTS, source: 'dummy' };
+    return {
+      posts: DUMMY_POSTS,
+      nextCursor: null
+    };
   }
 }

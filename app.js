@@ -1,4 +1,5 @@
 let POSTS          = [];  
+let nextCursor     = null;
 let currentFilter  = 'all';
 let displayedCount = 12;
 const likedPosts   = new Set();
@@ -117,7 +118,7 @@ function renderFeed() {
   });
 
   const total = filteredPosts().length;
-  btn.style.display = displayedCount < total ? '' : 'none';
+  btn.style.display = (displayedCount < total || nextCursor) ? '' : 'none';
 }
 
 function openModal(post) {
@@ -234,7 +235,30 @@ document.getElementById('feed-tabs').addEventListener('click', e => {
 });
 
 
-document.getElementById('load-more-btn').addEventListener('click', () => {
+document.getElementById('load-more-btn').addEventListener('click', async () => {
+  const btn = document.getElementById('load-more-btn');
+  const currentTotal = filteredPosts().length;
+
+  // If we're about to run out of filtered posts and there's another page
+  if (displayedCount + 4 > currentTotal && nextCursor) {
+    const originalText = btn.textContent;
+    btn.textContent = 'Loading...';
+    btn.style.opacity = '0.6';
+    btn.style.pointerEvents = 'none';
+
+    try {
+      const { posts, nextCursor: newCur } = await fetchInstagramPosts(nextCursor);
+      POSTS.push(...posts);
+      nextCursor = newCur;
+    } catch (err) {
+      console.warn('[THRM] Failed to load more posts', err);
+    }
+
+    btn.textContent = originalText;
+    btn.style.opacity = '1';
+    btn.style.pointerEvents = 'auto';
+  }
+
   displayedCount += 4;
   renderFeed();
 });
@@ -373,12 +397,13 @@ function applyAccountStats(stats) {
 async function init() {
   showLoading();
 
-  const [{ posts }, stats] = await Promise.all([
+  const [{ posts, nextCursor: cur }, stats] = await Promise.all([
     fetchInstagramPosts(),
     fetchAccountStats(),
   ]);
 
   POSTS = posts;
+  nextCursor = cur;
   renderFeed();
   applyAccountStats(stats);
 }
