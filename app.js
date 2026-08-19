@@ -97,7 +97,7 @@ function renderFeed() {
     // Type tag
     const tag = document.createElement('span');
     tag.className = 'post-type-tag';
-    tag.textContent = { quote: 'Quote', bts: 'BTS', collab: 'Collab', reel: 'Reel' }[post.type] || '';
+    tag.textContent = { reel: 'Reel', image: 'Post' }[post.type] || 'Post';
     card.appendChild(tag);
 
     // Hover overlay with stats
@@ -229,7 +229,7 @@ document.getElementById('feed-tabs').addEventListener('click', e => {
   tab.classList.add('active');
   tab.setAttribute('aria-selected', 'true');
   currentFilter  = tab.dataset.filter;
-  displayedCount = 6;
+  displayedCount = 12;
   renderFeed();
 });
 
