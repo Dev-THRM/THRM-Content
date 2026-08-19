@@ -278,32 +278,34 @@ mobileMenu.querySelectorAll('a').forEach(a => {
 });
 
 function animateCount(el, target, duration) {
+  const currentVal = parseFloat(el.textContent) || 0;
+  if (currentVal === target) return;
+
+  if (el._animFrame) cancelAnimationFrame(el._animFrame);
+
   let start;
+  const isFloat = !Number.isInteger(target);
+  
   const step = ts => {
     if (!start) start = ts;
     const p = Math.min((ts - start) / duration, 1);
     const eased = 1 - Math.pow(1 - p, 3);
-    el.textContent = Math.floor(eased * target);
-    if (p < 1) requestAnimationFrame(step);
+    const val = currentVal + eased * (target - currentVal);
+    
+    el.textContent = isFloat ? val.toFixed(1) : Math.floor(val);
+    
+    if (p < 1) {
+      el._animFrame = requestAnimationFrame(step);
+    }
   };
-  requestAnimationFrame(step);
-}
-
-let isHeroVisible  = false;
-let apiStatsLoaded = false;
-
-function checkAndAnimateStats() {
-  if (isHeroVisible && apiStatsLoaded) {
-    document.querySelectorAll('.stat-number').forEach(el => {
-      animateCount(el, parseFloat(el.dataset.target), 1600);
-    });
-  }
+  el._animFrame = requestAnimationFrame(step);
 }
 
 const heroObserver = new IntersectionObserver(entries => {
   if (entries[0].isIntersecting) {
-    isHeroVisible = true;
-    checkAndAnimateStats();
+    document.querySelectorAll('.stat-number').forEach(el => {
+      animateCount(el, parseFloat(el.dataset.target), 2000);
+    });
     heroObserver.disconnect();
   }
 }, { threshold: 0.5 });
@@ -342,11 +344,7 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 // });
 
 function applyAccountStats(stats) {
-  if (!stats) {
-    apiStatsLoaded = true;
-    checkAndAnimateStats();
-    return;
-  }
+  if (!stats) return;
 
   // Format numbers: e.g. 24700 → "24.7K", 1123 → "1123"
   function fmtStat(n) {
@@ -367,6 +365,7 @@ function applyAccountStats(stats) {
     if (match && numEl && unitEl) {
       numEl.dataset.target = match[1];
       unitEl.textContent   = match[2];
+      animateCount(numEl, parseFloat(match[1]), 1000);
     }
   }
 
@@ -379,6 +378,7 @@ function applyAccountStats(stats) {
     if (match && numEl && unitEl) {
       numEl.dataset.target = match[1];
       unitEl.textContent   = match[2] + '+';
+      animateCount(numEl, parseFloat(match[1]), 1000);
     }
   }
 
@@ -390,11 +390,9 @@ function applyAccountStats(stats) {
     if (numEl && unitEl) {
       numEl.dataset.target = rate;
       unitEl.textContent   = '%';
+      animateCount(numEl, parseFloat(rate), 1000);
     }
   }
-
-  apiStatsLoaded = true;
-  checkAndAnimateStats();
 }
 
 async function init() {
