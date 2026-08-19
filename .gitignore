@@ -1,2 +1,2 @@
 # Keep the access token out of version control
-instagram-config.js
+.env

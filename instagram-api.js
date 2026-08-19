@@ -180,28 +180,26 @@ function mapIgPost(igPost, index) {
 // ── FETCH ACCOUNT STATS ──────────────────────────────────────
 // Returns followers count, total posts, and engagement rate.
 async function fetchAccountStats() {
-  const token = INSTAGRAM_CONFIG.ACCESS_TOKEN;
-  if (!token || token === 'PASTE_YOUR_TOKEN_HERE') return null;
-
   try {
     // 1. Account-level fields
-    const accountUrl = new URL('https://graph.instagram.com/me');
-    accountUrl.searchParams.set('fields', 'id,username,followers_count,media_count');
-    accountUrl.searchParams.set('access_token', token);
+    const accountUrl = new URL(window.location.href.split('/').slice(0, -1).join('/') + '/instagram.php');
+    accountUrl.searchParams.set('action', 'stats');
 
     const accountRes = await fetch(accountUrl.toString());
     if (!accountRes.ok) throw new Error(`Account fetch failed: ${accountRes.status}`);
     const account = await accountRes.json();
+    
+    if (account.error) throw new Error(account.error);
 
     // 2. Fetch recent posts for engagement calculation
-    const mediaUrl = new URL('https://graph.instagram.com/me/media');
-    mediaUrl.searchParams.set('fields', 'like_count,comments_count');
+    const mediaUrl = new URL(window.location.href.split('/').slice(0, -1).join('/') + '/instagram.php');
+    mediaUrl.searchParams.set('action', 'recent_media');
     mediaUrl.searchParams.set('limit', '30'); // last 30 posts
-    mediaUrl.searchParams.set('access_token', token);
 
     const mediaRes  = await fetch(mediaUrl.toString());
     const mediaJson = mediaRes.ok ? await mediaRes.json() : { data: [] };
     const posts     = mediaJson.data || [];
+
 
     // 3. Calculate engagement rate
     // Formula: avg (likes + comments) per post / followers * 100
@@ -231,21 +229,13 @@ async function fetchAccountStats() {
 
 // ── FETCH FROM API ───────────────────────────────────────────
 async function fetchInstagramPosts() {
-  const token = INSTAGRAM_CONFIG.ACCESS_TOKEN;
-
-  // If token is not configured, silently use dummy posts
-  if (!token || token === 'PASTE_YOUR_TOKEN_HERE') {
-    console.info('[THRM] Instagram token not set — using dummy posts.');
-    return { posts: DUMMY_POSTS, source: 'dummy' };
-  }
-
-  const url = new URL('https://graph.instagram.com/me/media');
-  url.searchParams.set('fields', INSTAGRAM_CONFIG.FIELDS);
+  const url = new URL(window.location.href.split('/').slice(0, -1).join('/') + '/instagram.php');
+  url.searchParams.set('action', 'posts');
   url.searchParams.set('limit',  INSTAGRAM_CONFIG.POSTS_PER_PAGE * 2);
-  url.searchParams.set('access_token', token);
 
   try {
     const res = await fetch(url.toString());
+
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
