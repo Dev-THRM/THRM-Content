@@ -1,11 +1,3 @@
-/* ===================================================
-   instagram-api.js
-   Fetches real posts from the Instagram Graph API
-   and maps them into the post format used by app.js.
-   Falls back to DUMMY_POSTS if the fetch fails or
-   the token has not been configured yet.
-=================================================== */
-
 // ── FALLBACK DUMMY POSTS ─────────────────────────────────────
 // Used when the token is not yet set or the API call fails.
 const DUMMY_POSTS = [
@@ -92,7 +84,6 @@ const DUMMY_POSTS = [
 ];
 
 // ── BG PALETTE for real posts ────────────────────────────────
-// Rotated through so each real post gets a distinct dark tile.
 const BG_PALETTE = [
   { bg: '#0f0f12', textColor: '#d4d4d4' },
   { bg: '#0c0f14', textColor: '#c8d4d8' },
@@ -106,7 +97,6 @@ const BG_PALETTE = [
 ];
 
 // ── TYPE DETECTION ───────────────────────────────────────────
-// Instagram media types: IMAGE, VIDEO, CAROUSEL_ALBUM
 function detectType(mediaType) {
   if (mediaType === 'VIDEO') return 'reel';
   if (mediaType === 'CAROUSEL_ALBUM') return 'collab';

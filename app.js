@@ -1,16 +1,9 @@
-/* ===================================================
-   THRM CONTENT — app.js
-   Feed logic, modal, interactions
-=================================================== */
-
-// ── STATE ────────────────────────────────────────────────────
-let POSTS          = [];   // populated by init() from instagram-api.js
+let POSTS          = [];  
 let currentFilter  = 'all';
 let displayedCount = 6;
 const likedPosts   = new Set();
 const savedPosts   = new Set();
 
-// ── UTILS ────────────────────────────────────────────────────
 function fmt(n) {
   return n >= 1000 ? (n / 1000).toFixed(1) + 'K' : String(n);
 }
@@ -21,7 +14,6 @@ function filteredPosts() {
     : POSTS.filter(p => p.type === currentFilter);
 }
 
-// Builds a dark colour tile (used as fallback when images fail)
 function buildTile(post, minHeight) {
   const wrap = document.createElement('div');
   wrap.style.cssText = `
@@ -60,7 +52,6 @@ function buildTile(post, minHeight) {
   return wrap;
 }
 
-// ── LOADING STATE ────────────────────────────────────────────
 function showLoading() {
   const grid = document.getElementById('feed-grid');
   grid.innerHTML = `
@@ -70,7 +61,6 @@ function showLoading() {
   document.getElementById('load-more-btn').style.display = 'none';
 }
 
-// ── RENDER ───────────────────────────────────────────────────
 function renderFeed() {
   const grid  = document.getElementById('feed-grid');
   const posts = filteredPosts().slice(0, displayedCount);
@@ -90,7 +80,7 @@ function renderFeed() {
     card.dataset.id = post.id;
 
     if (post.isReal && post.mediaUrl) {
-      // Real Instagram image — with onerror fallback to colour tile
+      // Real Instagram image 
       const img = document.createElement('img');
       img.src = post.mediaUrl;
       img.alt = post.caption ? post.caption.slice(0, 60) : 'Instagram post';
@@ -101,7 +91,6 @@ function renderFeed() {
       };
       card.appendChild(img);
     } else {
-      // Colour tile (dummy post or missing URL)
       card.appendChild(buildTile(post, null));
     }
 
@@ -131,7 +120,6 @@ function renderFeed() {
   btn.style.display = displayedCount < total ? '' : 'none';
 }
 
-// ── MODAL ────────────────────────────────────────────────────
 function openModal(post) {
   const overlay = document.getElementById('modal-overlay');
   const visual  = document.getElementById('modal-visual');
@@ -139,7 +127,7 @@ function openModal(post) {
   visual.innerHTML = '';
 
   if (post.isReal && post.mediaUrl) {
-    // Real Instagram image — with onerror fallback
+    // Real Instagram image 
     const img = document.createElement('img');
     img.src = post.mediaUrl;
     img.alt = post.caption ? post.caption.slice(0, 60) : 'Instagram post';
@@ -162,14 +150,13 @@ function openModal(post) {
     visual.appendChild(tile);
   }
 
-  // Info pane
+
   document.getElementById('modal-date').textContent    = post.date;
   document.getElementById('modal-caption').textContent = post.caption || '';
 
   const tagsEl = document.getElementById('modal-tags');
   tagsEl.innerHTML = (post.tags || []).map(t => `<span class="modal-tag">${t}</span>`).join('');
 
-  // If real post, show a link to the original
   const existingLink = document.getElementById('modal-ig-link');
   if (existingLink) existingLink.remove();
   if (post.permalink) {
@@ -232,7 +219,6 @@ document.getElementById('modal-overlay').addEventListener('click', e => {
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-// ── TABS ─────────────────────────────────────────────────────
 document.getElementById('feed-tabs').addEventListener('click', e => {
   const tab = e.target.closest('.tab');
   if (!tab) return;
@@ -247,7 +233,7 @@ document.getElementById('feed-tabs').addEventListener('click', e => {
   renderFeed();
 });
 
-// ── LOAD MORE ────────────────────────────────────────────────
+
 document.getElementById('load-more-btn').addEventListener('click', () => {
   displayedCount += 3;
   renderFeed();
@@ -259,7 +245,6 @@ window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 10);
 }, { passive: true });
 
-// ── HAMBURGER ────────────────────────────────────────────────
 const hamburger  = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobile-menu');
 
@@ -279,7 +264,6 @@ mobileMenu.querySelectorAll('a').forEach(a => {
   });
 });
 
-// ── STAT COUNTER ─────────────────────────────────────────────
 function animateCount(el, target, duration) {
   let start;
   const step = ts => {
@@ -304,7 +288,6 @@ const heroObserver = new IntersectionObserver(entries => {
 const heroStats = document.querySelector('.hero-meta');
 if (heroStats) heroObserver.observe(heroStats);
 
-// ── SCROLL REVEAL ────────────────────────────────────────────
 document.querySelectorAll([
   '.section-header',
   '.about-left',
@@ -319,23 +302,22 @@ const revealObs = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
 // ── CONTACT FORM ─────────────────────────────────────────────
-document.getElementById('contact-form').addEventListener('submit', e => {
-  e.preventDefault();
-  const btn     = document.getElementById('send-btn');
-  const success = document.getElementById('form-success');
-  btn.textContent  = 'Sending...';
-  btn.style.opacity = '0.6';
+// document.getElementById('contact-form').addEventListener('submit', e => {
+//   e.preventDefault();
+//   const btn     = document.getElementById('send-btn');
+//   const success = document.getElementById('form-success');
+//   btn.textContent  = 'Sending...';
+//   btn.style.opacity = '0.6';
 
-  setTimeout(() => {
-    btn.textContent  = 'Send message';
-    btn.style.opacity = '1';
-    success.classList.add('visible');
-    e.target.reset();
-    setTimeout(() => success.classList.remove('visible'), 4000);
-  }, 1000);
-});
+//   setTimeout(() => {
+//     btn.textContent  = 'Send message';
+//     btn.style.opacity = '1';
+//     success.classList.add('visible');
+//     e.target.reset();
+//     setTimeout(() => success.classList.remove('visible'), 4000);
+//   }, 1000);
+// });
 
-// ── UPDATE HERO STATS ────────────────────────────────────────
 function applyAccountStats(stats) {
   if (!stats) return;
 
@@ -388,11 +370,9 @@ function applyAccountStats(stats) {
   }
 }
 
-// ── INIT (async) ─────────────────────────────────────────────
 async function init() {
   showLoading();
 
-  // Fetch posts and account stats in parallel
   const [{ posts }, stats] = await Promise.all([
     fetchInstagramPosts(),
     fetchAccountStats(),
