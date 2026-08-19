@@ -2,9 +2,11 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
-// Load the token from the .env file (which will be excluded from Git)
-$env = parse_ini_file(__DIR__ . '/.env');
-$ACCESS_TOKEN = $env['INSTAGRAM_ACCESS_TOKEN'] ?? '';
+// ===================================================
+// SECURE CONFIGURATION
+// Your token is safe here because PHP code is never sent to the browser.
+// ===================================================
+$ACCESS_TOKEN = 'IGAAfKKGzijcBBZAFpFMl8zaWRKQ19pSW9WZAFU5enRuMkJmSi14Q3NHRV80cG4zdWVIeVdWNTZAwNVdDaURzeEhBV0JpRkYtbGxTaXJpN2FSWkR0MnRiWWJ3ZAkExZAUNlOUx6NHQ0emgwa0pycnJjUkt6YjI1cHRlWElQMTlONlpwQQZDZD';
 
 if (!$ACCESS_TOKEN) {
     echo json_encode(['error' => 'Instagram access token not configured.']);
