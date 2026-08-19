@@ -2,8 +2,6 @@ let POSTS          = [];
 let nextCursor     = null;
 let currentFilter  = 'all';
 let displayedCount = 12;
-const likedPosts   = new Set();
-const savedPosts   = new Set();
 
 function fmt(n) {
   return n >= 1000 ? (n / 1000).toFixed(1) + 'K' : String(n);
@@ -107,7 +105,7 @@ function renderFeed() {
     const statsEl = document.createElement('div');
     statsEl.className = 'post-stats';
     statsEl.innerHTML = `
-      <span class="post-stat-item">${fmt(post.likes + (likedPosts.has(post.id) ? 1 : 0))} likes</span>
+      <span class="post-stat-item">${fmt(post.likes)} likes</span>
       <span class="post-stat-item">${fmt(post.comments)} comments</span>
     `;
     overlay.appendChild(statsEl);
@@ -191,30 +189,8 @@ function openModal(post) {
     tagsEl.after(link);
   }
 
-  const likeBtn = document.getElementById('modal-like-btn');
-  const saveBtn = document.getElementById('modal-save-btn');
-
-  function syncLike() {
-    const liked = likedPosts.has(post.id);
-    likeBtn.textContent = fmt(post.likes + (liked ? 1 : 0)) + ' likes';
-    likeBtn.classList.toggle('liked', liked);
-  }
-
-  syncLike();
-  saveBtn.classList.toggle('saved', savedPosts.has(post.id));
-  saveBtn.textContent = savedPosts.has(post.id) ? 'Saved' : 'Save';
-
-  likeBtn.onclick = () => {
-    likedPosts.has(post.id) ? likedPosts.delete(post.id) : likedPosts.add(post.id);
-    syncLike();
-    renderFeed();
-  };
-
-  saveBtn.onclick = () => {
-    savedPosts.has(post.id) ? savedPosts.delete(post.id) : savedPosts.add(post.id);
-    saveBtn.classList.toggle('saved', savedPosts.has(post.id));
-    saveBtn.textContent = savedPosts.has(post.id) ? 'Saved' : 'Save';
-  };
+  document.getElementById('modal-likes').textContent = fmt(post.likes);
+  document.getElementById('modal-comments').textContent = fmt(post.comments || 0);
 
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';

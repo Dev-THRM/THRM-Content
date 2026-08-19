@@ -885,26 +885,18 @@ button { cursor: pointer; font-family: inherit; background: none; border: none; 
   border-top: 1px solid var(--line);
 }
 
-.modal-stat-btn {
+.modal-stat {
   padding: 9px 18px;
   border-radius: var(--radius);
   border: 1px solid var(--line);
   background: transparent;
-  color: var(--text-mid);
+  color: var(--text-hi);
   font-size: 0.8rem;
   font-weight: 500;
-  font-family: inherit;
-  transition: all var(--dur) var(--ease);
-  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
-
-.modal-stat-btn:hover {
-  color: var(--text-hi);
-  border-color: var(--text-lo);
-}
-
-.modal-stat-btn.liked  { color: var(--text-hi); border-color: var(--text-mid); }
-.modal-stat-btn.saved  { color: var(--accent);  border-color: rgba(200,169,126,0.4); }
 
 /* --- REVEAL ANIMATION ----------------------------- */
 .reveal {
