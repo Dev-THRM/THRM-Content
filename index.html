@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>THRM Content</title>
+  <meta name="description" content="THRM Content is a creative studio building premium digital content and brand storytelling." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" id="site-logo">
+        <img src="logo.png" alt="THRM Content" class="nav-logo-img" />
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="#feed">Feed</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="https://instagram.com" target="_blank" rel="noopener" class="nav-ig" id="nav-ig-link">@thrm.digitalmarketing_agency</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <a href="#feed">Feed</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="https://instagram.com" target="_blank" rel="noopener">@thrm.digitalmarketing_agency</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+    <div class="hero-inner">
+      <h1 class="hero-title" id="hero-title">
+        We make content<br/>that moves people.
+      </h1>
+      <div class="hero-meta">
+        <div class="hero-stat">
+          <span class="stat-number" data-target="24">0</span><span class="stat-unit">.7K</span>
+          <span class="stat-desc">Followers</span>
+        </div>
+        <div class="hero-stat">
+          <span class="stat-number" data-target="1123">0</span><span class="stat-unit">+</span>
+          <span class="stat-desc">Posts</span>
+        </div>
+        <div class="hero-stat">
+          <span class="stat-number" data-target="98">0</span><span class="stat-unit">%</span>
+          <span class="stat-desc">Engagement</span>
+        </div>
+      </div>
+      <div class="hero-cta">
+        <a href="#feed" class="btn-primary" id="hero-cta-feed">View Feed</a>
+        <a href="#contact" class="btn-secondary" id="hero-cta-contact">Work with us</a>
+      </div>
+    </div>
+    <div class="hero-rule"></div>
+  </section>
+
+  <!-- FEED -->
+  <section class="feed-section" id="feed">
+    <div class="section-inner">
+
+      <div class="section-header">
+        <div class="section-header-left">
+          <span class="section-label">Instagram</span>
+          <h2 class="section-title">Latest drops</h2>
+        </div>
+        <div class="feed-tabs" id="feed-tabs" role="tablist">
+          <button class="tab active" data-filter="all" id="tab-all" role="tab" aria-selected="true">All</button>
+          <button class="tab" data-filter="quote" id="tab-quote" role="tab" aria-selected="false">Quotes</button>
+          <button class="tab" data-filter="bts" id="tab-bts" role="tab" aria-selected="false">BTS</button>
+          <button class="tab" data-filter="collab" id="tab-collab" role="tab" aria-selected="false">Collabs</button>
+          <button class="tab" data-filter="reel" id="tab-reel" role="tab" aria-selected="false">Reels</button>
+        </div>
+      </div>
+
+      <div class="feed-grid" id="feed-grid"></div>
+
+      <div class="load-more-wrap">
+        <button class="btn-load-more" id="load-more-btn">Load more</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="section-inner about-grid">
+      <div class="about-left">
+        <span class="section-label">About</span>
+        <h2 class="section-title">Built for creators,<br/>driven by craft.</h2>
+      </div>
+      <div class="about-right">
+        <p class="about-body">
+          THRM Content is a creative studio focused on building authentic digital presence for
+          brands that want to stand out. We produce content with intention: every post is
+          crafted to start a conversation, not just fill a feed.
+        </p>
+        <div class="about-pillars">
+          <div class="pillar" id="pillar-strategy">
+            <span class="pillar-num">01</span>
+            <div>
+              <strong>Strategic content</strong>
+              <span>Every post is crafted with purpose and precision.</span>
+            </div>
+          </div>
+          <div class="pillar" id="pillar-frequency">
+            <span class="pillar-num">02</span>
+            <div>
+              <strong>High frequency</strong>
+              <span>Consistent output that keeps audiences engaged.</span>
+            </div>
+          </div>
+          <div class="pillar" id="pillar-visual">
+            <span class="pillar-num">03</span>
+            <div>
+              <strong>Considered visuals</strong>
+              <span>Aesthetic-first design that earns the second look.</span>
+            </div>
+          </div>
+        </div>
+        <a href="#contact" class="btn-primary" id="about-cta">Work with us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT
+  <section class="contact-section" id="contact">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-header-left">
+          <span class="section-label">Contact</span>
+          <h2 class="section-title">Start a project.</h2>
+        </div>
+        <div class="contact-handles">
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="handle-link" id="contact-ig">@thrm.content</a>
+          <a href="mailto:hello@thrmcontent.com" class="handle-link" id="contact-mail">hello@thrmcontent.com</a>
+        </div>
+      </div>
+
+      <form class="contact-form" id="contact-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required autocomplete="name" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="message">What are you working on?</label>
+          <textarea id="message" name="message" rows="5" placeholder="Tell us about your project, timeline, and goals." required></textarea>
+        </div>
+        <div class="form-footer">
+          <button type="submit" class="btn-primary" id="send-btn">Send message</button>
+          <span class="form-success" id="form-success" aria-live="polite">Message sent. We will be in touch.</span>
+        </div>
+      </form>
+
+    </div>
+  </section> -->
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <img src="logo.png" alt="THRM Content" class="footer-logo-img" />
+      <span class="footer-copy">2026. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <!-- POST MODAL -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-label="Post detail">
+    <div class="modal" id="post-modal">
+      <button class="modal-close" id="modal-close" aria-label="Close">
+        <span></span><span></span>
+      </button>
+      <div class="modal-body">
+        <div class="modal-visual" id="modal-visual"></div>
+        <div class="modal-info">
+          <div class="modal-meta">
+            <span class="modal-account">thrm.content</span>
+            <span class="modal-date" id="modal-date"></span>
+          </div>
+          <p class="modal-caption" id="modal-caption"></p>
+          <div class="modal-tags" id="modal-tags"></div>
+          <div class="modal-actions">
+            <button class="modal-stat-btn" id="modal-like-btn">
+              <span id="modal-likes">0</span> likes
+            </button>
+            <button class="modal-stat-btn" id="modal-save-btn">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="stars.js"></script>
+  <script src="instagram-config.js"></script>
+  <script src="instagram-api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
