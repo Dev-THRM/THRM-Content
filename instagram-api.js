@@ -99,8 +99,7 @@ const BG_PALETTE = [
 // ── TYPE DETECTION ───────────────────────────────────────────
 function detectType(mediaType) {
   if (mediaType === 'VIDEO') return 'reel';
-  if (mediaType === 'CAROUSEL_ALBUM') return 'collab';
-  return 'quote'; // IMAGE — treat as a quote/graphic post
+  return 'image'; // IMAGE and CAROUSEL_ALBUM
 }
 
 // ── CAPTION PARSING ──────────────────────────────────────────
