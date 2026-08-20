@@ -290,7 +290,7 @@ button { cursor: pointer; font-family: inherit; background: none; border: none; 
   gap: 0;
   align-items: end;
   position: relative;
-  z-index: 1;
+  z-index: 3;
 }
 
 .hero-label {
