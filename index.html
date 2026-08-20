@@ -16,7 +16,7 @@
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
       <a href="#" class="nav-logo" id="site-logo">
-        <img src="logo.png" alt="THRM Content" class="nav-logo-img" />
+        <img src="assets/logo.png" alt="THRM Content" class="nav-logo-img" />
       </a>
       <ul class="nav-links" role="list">
         <li><a href="#feed">Feed</a></li>
@@ -38,7 +38,9 @@
 
   <!-- HERO -->
   <section class="hero" id="hero">
-    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+    <video class="hero-video-bg" id="hero-video-bg" autoplay muted loop playsinline aria-hidden="true">
+      <source src="assets/astro-falling.mp4" type="video/mp4" />
+    </video>
     <div class="hero-inner">
       <h1 class="hero-title" id="hero-title">
         We build brands<br/>that people remember.
@@ -172,7 +174,7 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
-      <img src="logo.png" alt="THRM Content" class="footer-logo-img" />
+      <img src="assets/logo.png" alt="THRM Content" class="footer-logo-img" />
       <span class="footer-copy">2026. All rights reserved.</span>
     </div>
   </footer>
@@ -205,7 +207,7 @@
     </div>
   </div>
 
-  <script src="stars.js?v=11"></script>
+
   <script src="instagram-config.js?v=11"></script>
   <script src="instagram-api.js?v=11"></script>
   <script src="app.js?v=11"></script>

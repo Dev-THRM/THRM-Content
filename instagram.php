@@ -5,7 +5,7 @@ header('Access-Control-Allow-Origin: *');
 $ACCESS_TOKEN = 'IGAAfKKGzijcBBZAFpFMl8zaWRKQ19pSW9WZAFU5enRuMkJmSi14Q3NHRV80cG4zdWVIeVdWNTZAwNVdDaURzeEhBV0JpRkYtbGxTaXJpN2FSWkR0MnRiWWJ3ZAkExZAUNlOUx6NHQ0emgwa0pycnJjUkt6YjI1cHRlWElQMTlONlpwQQZDZD';
 
 if (!$ACCESS_TOKEN) {
-    echo json_encode(['error' => 'Instagram access token not configured.']);
+    echo json_encode(['error' => 'Instagram access token not configured.']);  
     exit;
 }
 
