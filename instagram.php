@@ -38,6 +38,7 @@ $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($ch);
+file_put_contents('ig_response_log.txt', $response . PHP_EOL, FILE_APPEND);
 
 if(curl_errno($ch)){
     echo json_encode(['error' => curl_error($ch)]);

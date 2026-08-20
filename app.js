@@ -135,6 +135,26 @@ function openModal(post) {
       vid.loop = true;
       vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
       visual.appendChild(vid);
+    } else if (post.type === 'reel' && !post.videoUrl) {
+      // Reel blocked by Instagram API due to copyrighted audio
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'width:100%;height:100%;position:relative;display:flex;align-items:center;justify-content:center;background:#040812;';
+      
+      const img = document.createElement('img');
+      img.src = post.mediaUrl;
+      img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.3;';
+      
+      const msg = document.createElement('div');
+      msg.innerHTML = `
+        <div style="margin-bottom:16px;font-size:1.1rem;color:var(--text-hi);">🎵 Audio Restricted</div>
+        <p style="font-size:0.85rem;color:var(--text-mid);margin-bottom:24px;max-width:240px;line-height:1.4;">Instagram restricts playing Reels with copyrighted music outside their app.</p>
+        <a href="${post.permalink}" target="_blank" style="color:var(--text-hi);text-decoration:none;border:1px solid var(--line);padding:10px 20px;border-radius:24px;font-size:0.85rem;background:rgba(255,255,255,0.05);transition:all 0.2s;">Watch on Instagram</a>
+      `;
+      msg.style.cssText = 'position:relative;z-index:2;text-align:center;font-family:inherit;display:flex;flex-direction:column;align-items:center;';
+      
+      wrap.appendChild(img);
+      wrap.appendChild(msg);
+      visual.appendChild(wrap);
     } else {
       // Real Instagram image 
       const img = document.createElement('img');
