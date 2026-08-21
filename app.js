@@ -136,74 +136,25 @@ function openModal(post) {
       vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
       visual.appendChild(vid);
     } else if (post.type === 'reel' && !post.videoUrl) {
-      // Reel blocked by Instagram API due to copyrighted audio — use Instagram embed
-      // Extract shortcode from permalink e.g. https://www.instagram.com/reel/ABC123/
-      const shortcodeMatch = post.permalink && post.permalink.match(/\/(reel|p)\/([A-Za-z0-9_-]+)/);
-      const shortcode = shortcodeMatch ? shortcodeMatch[2] : null;
-
-      if (shortcode) {
-        // Wrapper clips the Instagram chrome (header + footer white bars)
-        // Instagram embed adds ~56px header + ~60px footer of white UI chrome.
-        // We make the iframe taller, shift it up, and clip overflow so only the video shows.
-        const clipWrap = document.createElement('div');
-        clipWrap.style.cssText = `
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
-          position: relative;
-          background: #000;
-        `;
-
-        const iframeWrap = document.createElement('div');
-        // Instagram reel embed aspect: ~320×480 content area + chrome
-        // We'll use a container that's slightly taller and offset upward to hide chrome
-        iframeWrap.style.cssText = `
-          position: absolute;
-          top: -56px;
-          left: 0;
-          right: 0;
-          bottom: -60px;
-          overflow: hidden;
-        `;
-
-        const iframe = document.createElement('iframe');
-        iframe.src = `https://www.instagram.com/reel/${shortcode}/embed/`;
-        iframe.setAttribute('allowfullscreen', '');
-        iframe.setAttribute('scrolling', 'no');
-        iframe.setAttribute('frameborder', '0');
-        iframe.style.cssText = `
-          width: 100%;
-          height: 100%;
-          border: none;
-          display: block;
-          background: #000;
-        `;
-
-        iframeWrap.appendChild(iframe);
-        clipWrap.appendChild(iframeWrap);
-        visual.appendChild(clipWrap);
-      } else {
-        // Fallback if no shortcode found — blurred thumbnail as background with text overlay
-        const wrap = document.createElement('div');
-        wrap.style.cssText = 'width:100%;height:100%;position:relative;display:flex;align-items:center;justify-content:center;background:#040812;';
-
-        if (post.mediaUrl) {
-          const img = document.createElement('img');
-          img.src = post.mediaUrl;
-          img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.3;';
-          wrap.appendChild(img);
-        }
-
-        const msg = document.createElement('div');
-        msg.innerHTML = `
-          <div style="margin-bottom:16px;font-size:1.1rem;color:var(--text-hi);">🎵 Audio Restricted</div>
-          <p style="font-size:0.85rem;color:var(--text-mid);margin-bottom:24px;max-width:240px;line-height:1.4;">Instagram restricts playing Reels with copyrighted music outside their app.</p>
-          <a href="${post.permalink}" target="_blank" style="color:var(--text-hi);text-decoration:none;border:1px solid var(--line);padding:10px 20px;border-radius:24px;font-size:0.85rem;background:rgba(255,255,255,0.05);transition:all 0.2s;">Watch on Instagram</a>
-        `;
-        msg.style.cssText = 'position:relative;z-index:2;text-align:center;font-family:inherit;display:flex;flex-direction:column;align-items:center;';
-        wrap.appendChild(msg);
-        visual.appendChild(wrap);
-      }
+      // Reel blocked by Instagram API due to copyrighted audio
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'width:100%;height:100%;position:relative;display:flex;align-items:center;justify-content:center;background:#040812;';
+      
+      const img = document.createElement('img');
+      img.src = post.mediaUrl;
+      img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.3;';
+      
+      const msg = document.createElement('div');
+      msg.innerHTML = `
+        <div style="margin-bottom:16px;font-size:1.1rem;color:var(--text-hi);">🎵 Audio Restricted</div>
+        <p style="font-size:0.85rem;color:var(--text-mid);margin-bottom:24px;max-width:240px;line-height:1.4;">Instagram restricts playing Reels with copyrighted music outside their app.</p>
+        <a href="${post.permalink}" target="_blank" style="color:var(--text-hi);text-decoration:none;border:1px solid var(--line);padding:10px 20px;border-radius:24px;font-size:0.85rem;background:rgba(255,255,255,0.05);transition:all 0.2s;">Watch on Instagram</a>
+      `;
+      msg.style.cssText = 'position:relative;z-index:2;text-align:center;font-family:inherit;display:flex;flex-direction:column;align-items:center;';
+      
+      wrap.appendChild(img);
+      wrap.appendChild(msg);
+      visual.appendChild(wrap);
     } else {
       // Real Instagram image 
       const img = document.createElement('img');
