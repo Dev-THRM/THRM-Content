@@ -125,47 +125,15 @@ function openModal(post) {
 
   visual.innerHTML = '';
 
-  if (post.isReal && post.mediaUrl) {
-    if (post.type === 'reel' && post.videoUrl) {
-      // Real Instagram video (Reel)
-      const vid = document.createElement('video');
-      vid.src = post.videoUrl;
-      vid.autoplay = true;
-      vid.controls = true;
-      vid.loop = true;
-      vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
-      visual.appendChild(vid);
-    } else if (post.type === 'reel' && !post.videoUrl) {
-      // Reel blocked by Instagram API due to copyrighted audio
-      // We can use the Instagram iframe embed instead so users can play it with audio
-      const iframe = document.createElement('iframe');
-      let embedUrl = post.permalink;
-      if (!embedUrl.endsWith('/')) embedUrl += '/';
-      embedUrl += 'embed';
-      
-      iframe.src = embedUrl;
-      iframe.frameBorder = "0";
-      iframe.scrolling = "no";
-      iframe.allowTransparency = "true";
-      iframe.style.cssText = 'width:100%;height:100%;display:block;border:none;background:#fff;';
-      
-      visual.appendChild(iframe);
-    } else {
-      // Real Instagram image 
-      const img = document.createElement('img');
-      img.src = post.mediaUrl;
-      img.alt = post.caption ? post.caption.slice(0, 60) : 'Instagram post';
-      img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
-      img.onerror = () => {
-        img.remove();
-        const tile = buildTile(post, null);
-        tile.style.position = 'relative';
-        tile.style.inset    = 'auto';
-        tile.style.height   = '100%';
-        visual.appendChild(tile);
-      };
-      visual.appendChild(img);
-    }
+  if (post.isReal && post.videoUrl) {
+    const ytVideoId = post.videoUrl;
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube.com/embed/${ytVideoId}?autoplay=1&mute=0&rel=0`;
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+    iframe.style.cssText = 'width:100%;height:100%;display:block;border:none;background:#000;';
+    iframe.frameBorder = "0";
+    visual.appendChild(iframe);
   } else {
     // Colour tile
     const tile = buildTile(post, null);
@@ -190,7 +158,7 @@ function openModal(post) {
     link.href = post.permalink;
     link.target = '_blank';
     link.rel  = 'noopener';
-    link.textContent = 'View on Instagram';
+    link.textContent = 'View on YouTube';
     link.style.cssText = `
       font-family:'Geist Mono',monospace;
       font-size:0.7rem;

@@ -138,82 +138,63 @@ function timeAgo(isoString) {
 }
 
 // ── MAP API RESPONSE → POST OBJECT ───────────────────────────
-function mapIgPost(igPost, index) {
-  const { text, tags } = parseCaption(igPost.caption);
+function mapYtPost(ytPost, index) {
+  const { text, tags } = parseCaption(ytPost.snippet.description);
   const palette = BG_PALETTE[index % BG_PALETTE.length];
-  const type    = detectType(igPost.media_type);
+  
+  // Every video is considered a "reel" (Shorts/Video)
+  const type = 'reel';
+  const videoId = ytPost.contentDetails?.videoId;
+  
+  const stats = ytPost.video_details?.statistics || {};
+  const thumbnails = ytPost.snippet.thumbnails || {};
+  const mediaUrl = (thumbnails.maxres || thumbnails.high || thumbnails.medium || thumbnails.default || {}).url;
 
   return {
-    id:         igPost.id,
+    id:         videoId,
     type,
     featured:   false,
     bg:         palette.bg,
     textColor:  palette.textColor,
-    quoteText:  igPost.media_type === 'IMAGE' ? (text.split('.')[0] || text).slice(0, 100) : null,
-    label:      type === 'reel' ? 'Reel' : type === 'collab' ? 'Carousel' : null,
+    quoteText:  ytPost.snippet.title,
+    label:      'Short',
     caption:    text,
     tags,
-    likes:      igPost.like_count    || 0,
-    comments:   igPost.comments_count || 0,
-    date:       timeAgo(igPost.timestamp),
-    permalink:  igPost.permalink,
-    // Videos: use thumbnail_url (cover frame) since media_url is an .mp4
-    // Images and carousels: media_url is a regular JPEG/PNG
-    mediaUrl:   igPost.media_type === 'VIDEO'
-                  ? (igPost.thumbnail_url || igPost.media_url || null)
-                  : (igPost.media_url || igPost.thumbnail_url || null),
-    videoUrl:   igPost.media_type === 'VIDEO' ? igPost.media_url : null,
+    likes:      parseInt(stats.likeCount || 0, 10),
+    comments:   parseInt(stats.commentCount || 0, 10),
+    views:      parseInt(stats.viewCount || 0, 10),
+    date:       timeAgo(ytPost.snippet.publishedAt),
+    permalink:  `https://www.youtube.com/watch?v=${videoId}`,
+    mediaUrl:   mediaUrl,
+    videoUrl:   videoId, // Using videoUrl field to store the YT Video ID
     isReal:     true,
   };
 }
 
 // ── FETCH ACCOUNT STATS ──────────────────────────────────────
-// Returns followers count, total posts, and engagement rate.
 async function fetchAccountStats() {
   try {
-    // 1. Account-level fields
-    const accountUrl = new URL('instagram.php', window.location.href);
+    const accountUrl = new URL('youtube.php', window.location.href);
     accountUrl.searchParams.set('action', 'stats');
 
     const accountRes = await fetch(accountUrl.toString());
     if (!accountRes.ok) throw new Error(`Account fetch failed: ${accountRes.status}`);
-    const account = await accountRes.json();
+    const json = await accountRes.json();
     
-    if (account.error) {
-      const errMsg = typeof account.error === 'object' ? JSON.stringify(account.error) : account.error;
-      throw new Error(errMsg);
-    }
+    if (json.error) throw new Error(json.error);
+    if (!json.items || json.items.length === 0) throw new Error("Channel not found");
 
-    // 2. Fetch recent posts for engagement calculation
-    const mediaUrl = new URL('instagram.php', window.location.href);
-    mediaUrl.searchParams.set('action', 'recent_media');
-    mediaUrl.searchParams.set('limit', '30'); // last 30 posts
+    const channel = json.items[0];
+    const stats = channel.statistics || {};
 
-    const mediaRes  = await fetch(mediaUrl.toString());
-    const mediaJson = mediaRes.ok ? await mediaRes.json() : { data: [] };
-    const posts     = mediaJson.data || [];
-
-
-    // 3. Calculate engagement rate
-    // Formula: avg (likes + comments) per post / followers * 100
-    let engagementRate = 0;
-    if (posts.length > 0 && account.followers_count > 0) {
-      const totalInteractions = posts.reduce(
-        (sum, p) => sum + (p.like_count || 0) + (p.comments_count || 0), 0
-      );
-      const avgInteractions = totalInteractions / posts.length;
-      engagementRate = ((avgInteractions / account.followers_count) * 100);
-    }
-
-    console.info('[THRM] Account stats fetched.', account);
+    console.info('[THRM] Account stats fetched.', channel);
 
     return {
-      followers:   account.followers_count || 0,
-      posts:       account.media_count     || 0,
-      engagement:  engagementRate,
-      username:    account.username        || '',
+      followers:   parseInt(stats.subscriberCount || 0, 10),
+      posts:       parseInt(stats.videoCount || 0, 10),
+      engagement:  0, // Engagement rate logic can be updated for YT if needed
+      username:    channel.snippet.customUrl || channel.snippet.title,
     };
-
   } catch (err) {
     console.warn('[THRM] Could not fetch account stats.', err.message);
     return null;
@@ -221,10 +202,10 @@ async function fetchAccountStats() {
 }
 
 // ── FETCH FROM API ───────────────────────────────────────────
-async function fetchInstagramPosts(after = null) {
-  const url = new URL('instagram.php', window.location.href);
+async function fetchYouTubePosts(after = null) {
+  const url = new URL('youtube.php', window.location.href);
   url.searchParams.set('action', 'posts');
-  url.searchParams.set('limit', 100); // Fetch max allowed to ensure we have enough Reels & Posts instantly
+  url.searchParams.set('limit', 50);
   if (after) {
     url.searchParams.set('after', after);
   }
@@ -237,26 +218,22 @@ async function fetchInstagramPosts(after = null) {
       throw new Error(err?.error?.message || `HTTP ${res.status}`);
     }
 
-    const json  = await res.json();
+    const json = await res.json();
     
-    if (json.error) {
-      const errMsg = typeof json.error === 'object' ? JSON.stringify(json.error) : json.error;
-      throw new Error(errMsg);
-    }
-    const items = (json.data || []).filter(p =>
-      p.media_type === 'IMAGE' || p.media_type === 'VIDEO' || p.media_type === 'CAROUSEL_ALBUM'
-    );
-
-    const posts = items.map(mapIgPost);
-    console.info(`[THRM] Loaded ${posts.length} real posts from Instagram.`);
+    if (json.error) throw new Error(json.error);
+    
+    const items = json.items || [];
+    const posts = items.map(mapYtPost);
+    
+    console.info(`[THRM] Loaded ${posts.length} real posts from YouTube.`);
 
     return {
       posts: posts,
-      nextCursor: json.paging?.cursors?.after || null
+      nextCursor: json.nextPageToken || null
     };
 
   } catch (err) {
-    console.warn('[THRM] Instagram API error — falling back to dummy posts.', err.message);
+    console.warn('[THRM] YouTube API error — falling back to dummy posts.', err.message);
     return {
       posts: DUMMY_POSTS,
       nextCursor: null
