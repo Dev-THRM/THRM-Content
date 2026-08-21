@@ -219,7 +219,7 @@ document.getElementById('load-more-btn').addEventListener('click', async () => {
     btn.style.pointerEvents = 'none';
 
     try {
-      const { posts, nextCursor: newCur } = await fetchInstagramPosts(nextCursor);
+      const { posts, nextCursor: newCur } = await fetchYouTubePosts(nextCursor);
       POSTS.push(...posts);
       nextCursor = newCur;
     } catch (err) {
@@ -382,7 +382,7 @@ async function init() {
   showLoading();
 
   const [{ posts, nextCursor: cur }, stats] = await Promise.all([
-    fetchInstagramPosts(),
+    fetchYouTubePosts(),
     fetchAccountStats(),
   ]);
 
