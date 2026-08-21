@@ -183,9 +183,17 @@ function openModal(post) {
         clipWrap.appendChild(iframeWrap);
         visual.appendChild(clipWrap);
       } else {
-        // Fallback if no shortcode found
+        // Fallback if no shortcode found — blurred thumbnail as background with text overlay
         const wrap = document.createElement('div');
         wrap.style.cssText = 'width:100%;height:100%;position:relative;display:flex;align-items:center;justify-content:center;background:#040812;';
+
+        if (post.mediaUrl) {
+          const img = document.createElement('img');
+          img.src = post.mediaUrl;
+          img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.3;';
+          wrap.appendChild(img);
+        }
+
         const msg = document.createElement('div');
         msg.innerHTML = `
           <div style="margin-bottom:16px;font-size:1.1rem;color:var(--text-hi);">🎵 Audio Restricted</div>
