@@ -738,7 +738,7 @@ button { cursor: pointer; font-family: inherit; background: none; border: none; 
 }
 
 .footer-logo-img {
-  height: 32px;
+  height: 48px;
   width: auto;
   mix-blend-mode: screen;
   filter: brightness(0.65);
