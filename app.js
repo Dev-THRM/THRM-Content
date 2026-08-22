@@ -308,23 +308,6 @@ const revealObs = new IntersectionObserver(entries => {
 
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-// ── CONTACT FORM ─────────────────────────────────────────────
-// document.getElementById('contact-form').addEventListener('submit', e => {
-//   e.preventDefault();
-//   const btn     = document.getElementById('send-btn');
-//   const success = document.getElementById('form-success');
-//   btn.textContent  = 'Sending...';
-//   btn.style.opacity = '0.6';
-
-//   setTimeout(() => {
-//     btn.textContent  = 'Send message';
-//     btn.style.opacity = '1';
-//     success.classList.add('visible');
-//     e.target.reset();
-//     setTimeout(() => success.classList.remove('visible'), 4000);
-//   }, 1000);
-// });
-
 function applyAccountStats(stats) {
   if (!stats) return;
 
