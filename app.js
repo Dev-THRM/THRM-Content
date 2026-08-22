@@ -182,8 +182,7 @@ function openModal(post) {
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
   document.body.style.overflow = '';
-  const vid = document.querySelector('#modal-visual video');
-  if (vid) vid.pause();
+  document.getElementById('modal-visual').innerHTML = '';
 }
 
 document.getElementById('modal-close').addEventListener('click', closeModal);
