@@ -8,10 +8,8 @@ if (!file_exists($envFile)) {
     exit;
 }
 
-// Parse .env file manually to avoid external dependencies
 $envVars = parse_ini_file($envFile);
 
-// Check for the YouTube API Key (assumes you named it YOUTUBE_API_KEY or similar)
 $API_KEY = isset($envVars['YOUTUBE_API_KEY']) ? $envVars['YOUTUBE_API_KEY'] : null;
 
 if (!$API_KEY) {
