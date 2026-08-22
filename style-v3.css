@@ -716,33 +716,218 @@ button { cursor: pointer; font-family: inherit; background: none; border: none; 
 
 /* --- FOOTER --------------------------------------- */
 .footer {
-  padding: 32px 0;
+  padding: 80px 0 0;
+  border-top: 1px solid var(--line);
+  background: var(--black);
 }
 
-.footer-inner {
+.footer-top {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 32px 64px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 40px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.footer-logo-img {
+  height: 48px;
+  width: auto;
+  mix-blend-mode: screen;
+  filter: brightness(0.9);
+  display: block;
+}
+
+.footer-brand-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-hi);
+  letter-spacing: -0.02em;
+}
+
+.footer-desc {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  line-height: 1.6;
+  margin-bottom: 32px;
+  max-width: 90%;
+}
+
+.footer-rating-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.footer-rating-btn:hover {
+  background: var(--surface);
+  border-color: var(--text-lo);
+}
+
+.rating-score {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fbbc04;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rating-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rating-text strong {
+  font-size: 0.8rem;
+  color: var(--text-hi);
+  font-weight: 600;
+}
+
+.rating-text span {
+  font-size: 0.7rem;
+  color: var(--text-mid);
+}
+
+.footer-heading {
+  font-family: 'Geist', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-hi);
+  margin-bottom: 24px;
+  font-weight: 700;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-links a {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  transition: color var(--dur) var(--ease);
+  display: inline-flex;
+  align-items: center;
+}
+
+.footer-links a:hover {
+  color: var(--text-hi);
+}
+
+/* Add bullet points to SERVICES list as in original image */
+.services-col .footer-links a::before {
+  content: "·";
+  color: var(--text-lo);
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.footer-address {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.footer-map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-hi);
+  transition: all var(--dur) var(--ease);
+}
+
+.footer-map-btn:hover {
+  background: var(--surface);
+  border-color: var(--text-lo);
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--line);
+  padding: 24px 0;
+}
+
+.footer-bottom-inner {
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 0 32px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
   flex-wrap: wrap;
+  gap: 16px;
 }
 
 .footer-copy {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.08em;
-  color: var(--text-lo);
+  font-size: 0.8rem;
+  color: var(--text-mid);
 }
 
-.footer-logo-img {
-  height: 64px;
-  width: auto;
-  mix-blend-mode: screen;
-  filter: brightness(0.65);
-  display: block;
+.footer-copy strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.back-to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-hi);
+  transition: all var(--dur) var(--ease);
+}
+
+.back-to-top:hover {
+  background: var(--line);
+}
+
+@media (max-width: 1024px) {
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+  .brand-col {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+  .footer-bottom-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 /* --- MODAL ---------------------------------------- */
