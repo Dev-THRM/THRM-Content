@@ -380,15 +380,11 @@ function applyAccountStats(stats) {
 async function init() {
   showLoading();
 
-  const [{ posts, nextCursor: cur }, stats] = await Promise.all([
-    fetchYouTubePosts(),
-    fetchAccountStats(),
-  ]);
+  const { posts, nextCursor: cur } = await fetchYouTubePosts();
 
   POSTS = posts;
   nextCursor = cur;
   renderFeed();
-  applyAccountStats(stats);
 }
 
 init();
