@@ -382,12 +382,12 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
         history.pushState(null, null, '/');
-      } else if (href === '/feed') {
+      } else if (href === '#feed') {
         e.preventDefault();
         const feedSection = document.getElementById('feed');
         if (feedSection) {
           feedSection.scrollIntoView({ behavior: 'smooth' });
-          history.pushState(null, null, '/'); // Keep URL clean to prevent 404s on static host
+          // No need to pushState, we just smoothly scroll to the section
         }
       }
     });
