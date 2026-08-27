@@ -371,3 +371,25 @@ async function init() {
 }
 
 init();
+
+// ── CLIENT ROUTING / SMOOTH SCROLL ──────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('a').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      
+      if (href === '/') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        history.pushState(null, null, '/');
+      } else if (href === '/feed') {
+        e.preventDefault();
+        const feedSection = document.getElementById('feed');
+        if (feedSection) {
+          feedSection.scrollIntoView({ behavior: 'smooth' });
+          history.pushState(null, null, '/feed');
+        }
+      }
+    });
+  });
+});
