@@ -22,7 +22,7 @@
   --radius-md:    8px;
   --radius-lg:    12px;
 
-  --nav-h:        64px;
+  --nav-h:        110px;
   --max-w:        1200px;
 
   --ease:         cubic-bezier(0.4, 0, 0.2, 1);
@@ -150,11 +150,12 @@ button { cursor: pointer; font-family: inherit; background: none; border: none; 
 }
 
 .nav-logo-img {
-  height: 80px;
+  height: 90px;
   width: auto;
   mix-blend-mode: screen;
   filter: brightness(0.9);
   display: block;
+  margin-top: 15px;
 }
 
 .nav-links {
@@ -738,7 +739,7 @@ button { cursor: pointer; font-family: inherit; background: none; border: none; 
 }
 
 .footer-logo-img {
-  height: 72px;
+  height: 90px;
   width: auto;
   mix-blend-mode: screen;
   filter: brightness(0.9);
