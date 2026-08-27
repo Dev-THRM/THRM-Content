@@ -387,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const feedSection = document.getElementById('feed');
         if (feedSection) {
           feedSection.scrollIntoView({ behavior: 'smooth' });
-          history.pushState(null, null, '/feed');
+          history.pushState(null, null, '/'); // Keep URL clean to prevent 404s on static host
         }
       }
     });
