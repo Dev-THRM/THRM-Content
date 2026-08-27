@@ -234,7 +234,7 @@ document.getElementById('load-more-btn').addEventListener('click', async () => {
   renderFeed();
 });
 
-// ── NAVBAR ───────────────────────────────────────────────────
+// ΓöÇΓöÇ NAVBAR ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 10);
@@ -311,7 +311,7 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 function applyAccountStats(stats) {
   if (!stats) return;
 
-  // Format numbers: e.g. 24700 → "24.7K", 1123 → "1123"
+  // Format numbers: e.g. 24700 ΓåÆ "24.7K", 1123 ΓåÆ "1123"
   function fmtStat(n) {
     if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
     if (n >= 1000)    return (n / 1000).toFixed(1) + 'K';
@@ -320,12 +320,12 @@ function applyAccountStats(stats) {
 
   const statEls = document.querySelectorAll('.hero-stat');
 
-  // Followers — first stat
+  // Followers ΓÇö first stat
   if (statEls[0] && stats.followers) {
     const numEl  = statEls[0].querySelector('.stat-number');
     const unitEl = statEls[0].querySelector('.stat-unit');
     const formatted = fmtStat(stats.followers);
-    // Split "24.7K" → number part "24.7", unit part "K"
+    // Split "24.7K" ΓåÆ number part "24.7", unit part "K"
     const match = formatted.match(/^([\d.]+)([KM]?)$/);
     if (match && numEl && unitEl) {
       numEl.dataset.target = match[1];
@@ -334,7 +334,7 @@ function applyAccountStats(stats) {
     }
   }
 
-  // Posts — second stat
+  // Posts ΓÇö second stat
   if (statEls[1] && stats.posts) {
     const numEl  = statEls[1].querySelector('.stat-number');
     const unitEl = statEls[1].querySelector('.stat-unit');
@@ -347,7 +347,7 @@ function applyAccountStats(stats) {
     }
   }
 
-  // Engagement rate — third stat
+  // Engagement rate ΓÇö third stat
   if (statEls[2] && stats.engagement !== undefined) {
     const numEl  = statEls[2].querySelector('.stat-number');
     const unitEl = statEls[2].querySelector('.stat-unit');
@@ -372,7 +372,7 @@ async function init() {
 
 init();
 
-// ── CLIENT ROUTING / SMOOTH SCROLL ──────────────────────────────
+// ΓöÇΓöÇ CLIENT ROUTING / SMOOTH SCROLL ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('a').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -392,4 +392,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+});
+
+// ── RAKSHA BANDHAN POPUP ───────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const overlay = document.getElementById('rb-overlay');
+  const closeBtn = document.getElementById('rb-close');
+  if (!overlay || !closeBtn) return;
+
+  // Open 1s after page load so site is visible first
+  setTimeout(() => overlay.classList.add('open'), 1000);
+
+  const close = () => overlay.classList.remove('open');
+  closeBtn.addEventListener('click', close);
+  overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 });

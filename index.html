@@ -219,6 +219,111 @@
     </div>
   </div>
 
+  <!-- RAKSHA BANDHAN ANIMATED POPUP -->
+  <div class="rb-overlay" id="rb-overlay" aria-hidden="true">
+    <div class="rb-card" id="rb-card">
+      <button class="rb-close" id="rb-close" aria-label="Close">✕</button>
+
+      <!-- Animated Rakhi SVG -->
+      <div class="rb-rakhi-stage">
+        <svg class="rb-svg" viewBox="0 0 420 170" xmlns="http://www.w3.org/2000/svg">
+
+          <!--
+            THREADS — drawn using pathLength="1" so stroke-dashoffset
+            animates from 1→0 regardless of actual path length.
+            Left thread curves up-left and curls at end.
+            Right thread curves down-right and curls at end.
+          -->
+
+          <!-- Left thread (purple) -->
+          <path class="rb-thread-l"
+            pathLength="1"
+            d="M 158,78
+               C 128,60 95,38 62,26
+               C 44,19 28,20 18,30
+               Q  8,42 16,53
+               Q 24,62 36,55"
+            fill="none" stroke="#6a0f6a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- Right thread (purple) -->
+          <path class="rb-thread-r"
+            pathLength="1"
+            d="M 262,92
+               C 292,110 325,130 358,142
+               C 376,149 392,148 400,138
+               Q 409,126 401,115
+               Q 393,106 381,113"
+            fill="none" stroke="#6a0f6a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- Gold bead — left -->
+          <circle class="rb-bead" cx="62" cy="27" r="5" fill="#FFD600"/>
+          <!-- Gold bead — right -->
+          <circle class="rb-bead" cx="357" cy="141" r="5" fill="#FFD600"/>
+
+          <!--
+            RAKHI DISC centered at (210, 85)
+            Purple outer → red star petals → gold disc → red ring → gold center
+          -->
+          <g transform="translate(210,85)">
+            <g class="rb-disc">
+
+              <!-- Outer purple ring (glow) -->
+            <circle r="58" fill="#8e24aa" opacity="0.25"/>
+
+            <!-- Main purple circle -->
+            <circle r="52" fill="#7B1FA2"/>
+
+            <!-- Dotted inner border -->
+            <circle r="46" fill="none" stroke="white" stroke-width="1.5" stroke-dasharray="3 6"/>
+
+            <!-- 8 red star petals -->
+            <ellipse rx="10" ry="24" cy="-26" fill="#D32F2F" transform="rotate(0)"/>
+            <ellipse rx="10" ry="24" cy="-26" fill="#D32F2F" transform="rotate(45)"/>
+            <ellipse rx="10" ry="24" cy="-26" fill="#D32F2F" transform="rotate(90)"/>
+            <ellipse rx="10" ry="24" cy="-26" fill="#D32F2F" transform="rotate(135)"/>
+            <ellipse rx="10" ry="24" cy="-26" fill="#D32F2F" transform="rotate(180)"/>
+            <ellipse rx="10" ry="24" cy="-26" fill="#D32F2F" transform="rotate(225)"/>
+            <ellipse rx="10" ry="24" cy="-26" fill="#D32F2F" transform="rotate(270)"/>
+            <ellipse rx="10" ry="24" cy="-26" fill="#D32F2F" transform="rotate(315)"/>
+
+            <!-- Deeper red star tips (inner layer) -->
+            <ellipse rx="7" ry="18" cy="-22" fill="#B71C1C" transform="rotate(22.5)"/>
+            <ellipse rx="7" ry="18" cy="-22" fill="#B71C1C" transform="rotate(67.5)"/>
+            <ellipse rx="7" ry="18" cy="-22" fill="#B71C1C" transform="rotate(112.5)"/>
+            <ellipse rx="7" ry="18" cy="-22" fill="#B71C1C" transform="rotate(157.5)"/>
+            <ellipse rx="7" ry="18" cy="-22" fill="#B71C1C" transform="rotate(202.5)"/>
+            <ellipse rx="7" ry="18" cy="-22" fill="#B71C1C" transform="rotate(247.5)"/>
+            <ellipse rx="7" ry="18" cy="-22" fill="#B71C1C" transform="rotate(292.5)"/>
+            <ellipse rx="7" ry="18" cy="-22" fill="#B71C1C" transform="rotate(337.5)"/>
+
+            <!-- Gold outer disc -->
+            <circle r="26" fill="#FDD835"/>
+
+            <!-- Orange-red inner ring -->
+            <circle r="20" fill="#E53935"/>
+
+            <!-- Gold inner disc -->
+            <circle r="14" fill="#FDD835"/>
+
+            <!-- Center red -->
+            <circle r="7" fill="#E53935"/>
+
+            <!-- Center gold dot -->
+            <circle r="3" fill="#FDD835"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <div class="rb-text-wrap">
+        <p class="rb-brand">THRM</p>
+        <p class="rb-wishes">wishes you a</p>
+        <p class="rb-festival">Happy Raksha Bandhan</p>
+        <p class="rb-sub">🪢 Celebrating the bond of love &amp; protection 🪢</p>
+      </div>
+    </div>
+  </div>
+
   <!-- APP LOGIC -->
   <script src="youtube-api-v3.js"></script>
   <script src="app-v3.js"></script>
