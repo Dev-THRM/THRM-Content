@@ -158,39 +158,6 @@ button { cursor: pointer; font-family: inherit; background: none; border: none; 
   margin-top: 15px;
 }
 
-/* --- FESTIVE RAKHI --- */
-.festive-rakhi {
-  position: absolute;
-  top: -10px; /* Attach near the top of the navbar */
-  right: -50px; /* Position it past the logo */
-  width: 60px;
-  pointer-events: none; /* Let clicks pass through to logo if needed */
-  transform-origin: top center;
-  animation: swingRakhi 3.5s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
-  z-index: 10; 
-}
-
-.nav-logo:hover .festive-rakhi {
-  animation: swingRakhiHover 1.5s ease-in-out infinite alternate;
-}
-
-.rakhi-svg {
-  width: 100%;
-  height: auto;
-  display: block;
-  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
-}
-
-@keyframes swingRakhi {
-  0%   { transform: rotate(-8deg); }
-  100% { transform: rotate(8deg); }
-}
-
-@keyframes swingRakhiHover {
-  0%   { transform: rotate(-15deg); }
-  100% { transform: rotate(15deg); }
-}
-
 .nav-links {
   list-style: none;
   display: flex;
