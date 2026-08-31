@@ -394,17 +394,3 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ── RAKSHA BANDHAN POPUP ───────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  const overlay = document.getElementById('rb-overlay');
-  const closeBtn = document.getElementById('rb-close');
-  if (!overlay || !closeBtn) return;
-
-  // Open 1s after page load so site is visible first
-  setTimeout(() => overlay.classList.add('open'), 1000);
-
-  const close = () => overlay.classList.remove('open');
-  closeBtn.addEventListener('click', close);
-  overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-});
